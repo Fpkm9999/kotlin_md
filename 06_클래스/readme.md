@@ -211,10 +211,13 @@ kotlin 으로 작성
 프라이머리 생성자가 나온 이유가 이거임.
 -> `class Car(val color: String)`
 
+다음은 코틀린의 `object`와 `companion object` 사용법에 대한 설명을 마크다운 문법으로 깔끔하게 정리한 문서입니다.
 
-## 오브젝트
+---
 
-`object` 키워드를 사용하면 인스턴스를 생성하지 않고 클래스의 프로퍼티와 메서드에 접근할 수 있습니다. 이는 자바의 `static`과 유사합니다.
+## 코틀린의 `object`
+
+`object` 키워드를 사용하면 클래스의 인스턴스를 생성하지 않고도 클래스의 프로퍼티와 메서드에 접근할 수 있습니다. 이는 자바의 `static` 키워드와 유사한 기능을 제공합니다.
 
 ```kotlin
 object Cat {
@@ -231,5 +234,57 @@ fun main() {
 }
 ```
 
-object 코드 블록 안의 프로퍼티와 메서드는 클래스명에 점 연산자를 붙여서 생성자 없이 직접 호출할 수 있음.
-주의할 점은 클래스명을 그대로 사용하기 떄문에 호출하는 클래스명의 첫 글자가 대문자.
+`object` 코드 블록 안의 프로퍼티와 메서드는 클래스명에 점 연산자를 사용하여 생성자 없이 직접 호출할 수 있습니다. 클래스명을 그대로 사용하기 때문에 호출 시 클래스명의 첫 글자는 대문자여야 합니다.
+
+## 컴패니언 오브젝트 (`companion object`)
+
+`companion object`는 클래스 내부에 정의된 정적 멤버의 집합으로, 클래스의 인스턴스를 생성하지 않고도 내부의 속성과 메서드에 접근할 수 있습니다. 이는 자바의 정적 메서드와 필드와 비슷한 개념입니다.
+
+### 실제 사용 예
+
+`companion object`는 일반 클래스에 `object` 기능을 추가하기 위해 사용됩니다. 클래스 코드 안에 `companion object` 블록을 추가하면, 생성 과정 없이 오브젝트처럼 사용할 수 있습니다.
+
+```kotlin
+package ch_07
+
+object Cat {
+    var name: String = "pinky"
+    fun prinName() {
+        println("Cat의 이름은 ${name}입니다.")
+    }
+}
+
+class Dog {
+    companion object {
+        var name: String = "None"
+        fun pritName() {
+            println("Dog 이름은 ${name} 입니다.")
+        }
+    }
+
+    fun walk() {
+        println("Dog가 뛰어갑니다.")
+    }
+
+}
+
+fun main() {
+    Cat.name = "mikey"
+    Cat.prinName()  // 출력: Cat의 이름은 mikey입니다.
+
+    // companion object 안의 코드 사용하기
+    Dog.name = "SHIBA_INU"
+    Dog.pritName() // Dog 이름은 SHIBA_INU 입니다.
+
+    // Dog.walk()  // companion object 밖에 선언된 메서드는 사용하지 못함. 객체 생성 필요
+
+    // companion object 밖의 코드 사용하기
+    val dog = Dog()
+    dog.walk()  // 출력: Dog가 뛰어갑니다.
+}
+```
+
+위 코드는 `Cat` 오브젝트와 `Dog` 클래스의 `companion object`를 통해 코틀린에서 객체의 생성 없이 프로퍼티와 메서드를 어떻게 사용하는지 보여줍니다. 
+
+이러한 특징은 특히 싱글턴 패턴이나 정적 유틸리티 함수를 구현할 때 유용합니다.
+```

@@ -185,7 +185,7 @@ fun nullParameter(str: String?) {
 }
 ```
 
-## 2. 안전한 호출 : ?.
+## 4. 안전한 호출 : ?.
 변수를 `Nullable` 로 만들기 위해서 `물음표`를 사용.<br>
 `?.` (Safe Call, 물음표와 점) 을 사용하면 null 체크를 간결하게 할 수 있음.
 
@@ -222,7 +222,7 @@ fun testSafeCall(str: String?):Int? {
 
 null 말고 기본값을 설정하고 싶다면?
 
-## 3. Null 값 대체하기 : `?:` 
+## 5. Null 값 대체하기 : `?:` 
 `?:` (Elvis Operator, 물음표와 콜론)을 사용하면 원본 변수가 null 일 때 넘겨줄 기본값을 설정할 수 있음.
 
 다음 코드에서 Safe Call 다음에 호출되는 프로퍼티 뒤에 다시 ?: 을 붙이고 0이라는 값을 표시.
